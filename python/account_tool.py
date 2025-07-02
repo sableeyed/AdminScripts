@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 
+#FAQ/Cheatsheet
+# How Do I remove legal holds from a list of graduated students? use LEGAL + GRADS
+# How Do I remove graduated students that are now faculty/staff? use DIFF + GRADS
+# How Do I remove legal holds from Deactivations (Can be Students or Fac/Staff)? use LEGAL + DEACT 
+# What does DIFF + DEACT do? Nothing
+
 import csv
 import re
 import argparse
@@ -73,6 +79,7 @@ def legal_hold_graduates(f1, f2):
 # Get-ADUser -Filter * -SearchBase "ou=Staff-Faculty,dc=trinity,dc=local" -Properties "Name", "mail", "passwordlastset", "msDS-UserPasswordExpiryTimeComputed" | Select-Object -Property "Name","mail","passwordlastset",@{Name="ExpiryDate";Expression={[datetime]::FromFileTime($_."msDS-UserPasswordExpiryTimeComputed")}} | export-csv ~\Desktop\facstaff.csv
 #These should be in CSV format even if they have 1 column
 #Column header is REQUIRED for the faculty/staff file
+#Reached by using DIFF + GRADS option
 def diff_grads_from_facstaff(f1, f2):
     with open(f1, "r") as facf, open(f2, "r") as gradf:
         facstaff = csv.DictReader(facf)
